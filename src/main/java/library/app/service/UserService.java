@@ -1,8 +1,8 @@
 package library.app.service;
 
-import library.app.entity.User;
-
 import java.util.List;
+
+import library.app.entity.User;
 
 public interface UserService {
     void add(User user);

@@ -1,12 +1,15 @@
 package library.app;
 
-import library.app.config.AppConfig;
-import library.app.entity.User;
-import library.app.service.UserService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import java.sql.SQLException;
 import java.util.List;
+
+import library.app.config.AppConfig;
+import library.app.dao.BookDao;
+import library.app.entity.Book;
+import library.app.entity.User;
+import library.app.service.UserService;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MainApp {
     public static void main(String[] args) throws SQLException {
@@ -28,6 +31,24 @@ public class MainApp {
             System.out.println("First Name = " + user.getFirstName());
             System.out.println("Last Name = " + user.getLastName());
             System.out.println("Email = " + user.getEmail());
+            System.out.println();
+        }
+
+        BookDao bookDao = context.getBean(BookDao.class);
+
+        //Add Books
+        bookDao.add(new Book("book 1", 1995, 20.5));
+        bookDao.add(new Book("book 2", 1998, 15D));
+        bookDao.add(new Book("book 3", 2005, 20.5));
+        bookDao.add(new Book("book 4", 1836, 4.35));
+
+        //Get Books
+        List<Book> books = bookDao.listBooks();
+        for (Book book: books) {
+            System.out.println("Id = " + book.getId());
+            System.out.println("title = " + book.getTitle());
+            System.out.println("year = " + book.getYear());
+            System.out.println("price = " + book.getPrice());
             System.out.println();
         }
 

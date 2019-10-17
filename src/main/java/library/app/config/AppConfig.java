@@ -1,6 +1,11 @@
 package library.app.config;
 
+import java.util.Properties;
+import javax.sql.DataSource;
+
+import library.app.entity.Book;
 import library.app.entity.User;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +17,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import java.util.Properties;
-import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:db.properties")
@@ -48,7 +50,7 @@ public class AppConfig {
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class);
+        factoryBean.setAnnotatedClasses(User.class, Book.class);
         return factoryBean;
     }
 
