@@ -27,6 +27,12 @@ public class Book {
     public Book() {
     }
 
+    public Book(String title, int year, double price) {
+        this.title = title;
+        this.year = year;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }
