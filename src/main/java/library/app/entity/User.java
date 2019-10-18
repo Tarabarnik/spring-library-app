@@ -64,4 +64,22 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+
+        return user.firstName.equals(this.firstName)
+                && user.lastName.equals(this.lastName)
+                && user.email.equals(this.email);
+    }
 }

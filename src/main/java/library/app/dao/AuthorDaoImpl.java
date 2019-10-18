@@ -3,8 +3,7 @@ package library.app.dao;
 import java.util.List;
 import javax.persistence.TypedQuery;
 
-import library.app.entity.Book;
-
+import library.app.entity.Author;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,25 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class BookDaoImpl implements BookDao {
+public class AuthorDaoImpl implements AuthorDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public void add(Book book) {
-        sessionFactory.getCurrentSession().save(book);
+    public void add(Author author) {
+        sessionFactory.getCurrentSession().save(author);
     }
 
     @Override
-    public void update(Book book) {
-        sessionFactory.getCurrentSession().update(book);
+    public void update(Author author) {
+        sessionFactory.getCurrentSession().update(author);
     }
 
     @Override
-    public List<Book> listBooks() {
+    public List<Author> listAuthors() {
         @SuppressWarnings("unchecked")
-        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("FROM Book");
+        TypedQuery<Author> query = sessionFactory.getCurrentSession().createQuery("FROM Author");
         return query.getResultList();
     }
 }
