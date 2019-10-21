@@ -23,9 +23,22 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public void update(Book book) {
+        sessionFactory.getCurrentSession().update(book);
+    }
+
+    @Override
+    public List<Book> findByTitle(String title) {
+        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery(
+                "FROM Book WHERE title LIKE CONCAT('%s', :title, '%s')", Book.class);
+        query.setParameter("title", title);
+        return query.getResultList();
+    }
+
+    @Override
     public List<Book> listBooks() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("FROM Book");
+        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("FROM Book",
+                Book.class);
         return query.getResultList();
     }
 }

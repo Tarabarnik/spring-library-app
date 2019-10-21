@@ -1,10 +1,17 @@
 package library.app.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +31,12 @@ public class Book {
     @Column(name = "price")
     private double price;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "books_authors",
+            joinColumns = { @JoinColumn(name = "book_id", referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "author_id", referencedColumnName = "id") })
+    private List<Author> authors = new ArrayList<>();
+
     public Book() {
     }
 
@@ -31,6 +44,17 @@ public class Book {
         this.title = title;
         this.year = year;
         this.price = price;
+    }
+
+    public Book(String title, int year, double price, List<Author> authors) {
+        this.title = title;
+        this.year = year;
+        this.price = price;
+        this.authors = authors;
+    }
+
+    public void addAuthor(Author author) {
+        authors.add(author);
     }
 
     public Long getId() {
@@ -63,5 +87,13 @@ public class Book {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 }
