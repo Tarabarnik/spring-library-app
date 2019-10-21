@@ -1,7 +1,6 @@
 package library.app.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import library.app.dao.BookDao;
 import library.app.entity.Book;
@@ -29,9 +28,6 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     @Override
     public List<Book> findByTitle(String title) {
-        return bookDao.listBooks()
-                .stream()
-                .filter(b -> b.getTitle().equals(title))
-                .collect(Collectors.toList());
+        return bookDao.findByTitle(title);
     }
 }

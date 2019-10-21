@@ -1,7 +1,6 @@
 package library.app.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import library.app.dao.AuthorDao;
 import library.app.entity.Author;
@@ -29,18 +28,12 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional(readOnly = true)
     @Override
     public List<Author> findByName(String name) {
-        return authorDao.listAuthors()
-                .stream()
-                .filter(a -> a.getName().equals(name))
-                .collect(Collectors.toList());
+        return authorDao.findByName(name);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Author> findByNameAndSurname(String name, String surname) {
-        return findByName(name)
-                .stream()
-                .filter(a -> a.getSurname().equals(surname))
-                .collect(Collectors.toList());
+        return authorDao.findByNameAndSurname(name, surname);
     }
 }

@@ -35,6 +35,14 @@ public class RentDaoImpl implements RentDao {
     }
 
     @Override
+    public List<Book> getBooksRentByUser(User user) {
+        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery(
+                "select book from Rent where user_id=:user_id", Book.class);
+        query.setParameter("user_id", user.getId());
+        return query.getResultList();
+    }
+
+    @Override
     public void update(Rent rent) {
         Query query = sessionFactory.getCurrentSession()
                 .createQuery("UPDATE Rent SET active = false WHERE id = :id");
@@ -44,8 +52,8 @@ public class RentDaoImpl implements RentDao {
 
     @Override
     public List<Rent> listRents() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Rent> query = sessionFactory.getCurrentSession().createQuery("FROM Rent");
+        TypedQuery<Rent> query = sessionFactory.getCurrentSession().createQuery("FROM Rent",
+                Rent.class);
         return query.getResultList();
     }
 }

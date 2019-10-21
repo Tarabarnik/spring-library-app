@@ -2,7 +2,6 @@ package library.app.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import library.app.dao.RentDao;
 import library.app.entity.Book;
@@ -23,6 +22,7 @@ public class LibraryServiceImpl implements LibraryService {
     public Rent rentBook(User user, Book book) {
         Rent rent = new Rent(LocalDate.now(), user, book, true);
         rentDao.add(rent);
+        rent.setId(rentDao.get(user, book).get().getId());
         return rent;
     }
 
@@ -37,10 +37,6 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional(readOnly = true)
     @Override
     public List<Book> getBooksRentByUser(User user) {
-        return rentDao.listRents()
-                .stream()
-                .filter(r -> r.getUser().equals(user))
-                .map(Rent::getBook)
-                .collect(Collectors.toList());
+        return rentDao.getBooksRentByUser(user);
     }
 }

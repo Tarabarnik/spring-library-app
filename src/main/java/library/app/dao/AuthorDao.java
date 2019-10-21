@@ -9,5 +9,9 @@ public interface AuthorDao {
 
     void update(Author author);
 
+    List<Author> findByName(String name);
+
+    List<Author> findByNameAndSurname(String name, String surname);
+
     List<Author> listAuthors();
 }
