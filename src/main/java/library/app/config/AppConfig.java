@@ -3,11 +3,6 @@ package library.app.config;
 import java.util.Properties;
 import javax.sql.DataSource;
 
-import library.app.entity.Author;
-import library.app.entity.Book;
-import library.app.entity.Rent;
-import library.app.entity.User;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -52,7 +47,7 @@ public class AppConfig {
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         props.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class, Book.class, Rent.class, Author.class);
+        factoryBean.setPackagesToScan("library.app.entity");
         return factoryBean;
     }
 
