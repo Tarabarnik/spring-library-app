@@ -1,6 +1,7 @@
 package library.app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import library.app.dao.BookDao;
 import library.app.entity.Book;
@@ -17,6 +18,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public void update(Book book) {
         bookDao.update(book);
+    }
+
+    @Override
+    public Optional<Book> get(Long id) {
+        return bookDao.get(id);
+    }
+
+    @Override
+    public List<Book> listBooks() {
+        return bookDao.listBooks();
     }
 
     @Transactional
