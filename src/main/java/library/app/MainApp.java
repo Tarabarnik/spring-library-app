@@ -29,6 +29,7 @@ public class MainApp {
         userService.add(new User("David", "Miller", "david.miller@example.com"));
         userService.add(new User("Sameer", "Singh", "sameer.singh@example.com"));
         userService.add(new User("Paul", "Smith", "paul.smith@example.com"));
+        System.out.println(userService.get(1L).get().getFirstName());
 
         // Get Users
         List<User> users = userService.listUsers();
