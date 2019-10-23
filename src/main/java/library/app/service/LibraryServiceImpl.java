@@ -22,8 +22,7 @@ public class LibraryServiceImpl implements LibraryService {
     public Rent rentBook(User user, Book book) {
         Rent rent = new Rent(LocalDate.now(), user, book, true);
         rentDao.add(rent);
-        rent.setId(rentDao.get(user, book).get().getId());
-        return rent;
+        return rentDao.get(user, book).get();
     }
 
     @Transactional

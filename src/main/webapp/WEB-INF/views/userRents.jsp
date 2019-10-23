@@ -2,10 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>all books</title>
+    <title>My rents</title>
 </head>
 <body>
-<h1>Hello world from all books page!</h1>
 <table>
     <tr>
         <th>Id</th>
@@ -22,10 +21,7 @@
             <td>${book.year}</td>
             <td>${book.price}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/book/info/${book.id}">Info</a>
-            </td>
-            <td>
-                <a href="${pageContext.request.contextPath}/rent/getbook?book_id=${book.id}">Rent</a>
+                <a href="${pageContext.request.contextPath}/rent/returnbook?book_id=${book.id}">Return</a>
             </td>
             <td>${book.authors}</td>
         </tr>

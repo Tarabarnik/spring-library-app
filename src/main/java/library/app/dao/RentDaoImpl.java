@@ -31,7 +31,9 @@ public class RentDaoImpl implements RentDao {
                 .createQuery("FROM Rent WHERE user_id=:user AND book_id=:book");
         query.setParameter("user", user.getId());
         query.setParameter("book", book.getId());
-        return Optional.ofNullable((Rent) query.getSingleResult());
+        Optional<Rent> rent = Optional.ofNullable((Rent) query.setMaxResults(1)
+                .getSingleResult());
+        return rent;
     }
 
     @Override
