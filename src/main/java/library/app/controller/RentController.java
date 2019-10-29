@@ -36,7 +36,7 @@ public class RentController {
         return userRents(model, principal);
     }
 
-    @GetMapping("/userRents")
+    @GetMapping("/userrents")
     public String userRents(ModelMap model, Principal principal) {
         User user = userService.getByEmail(principal.getName()).get();
         List<Book> books = libraryService.getBooksRentByUser(user);

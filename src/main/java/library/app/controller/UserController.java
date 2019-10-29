@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -33,18 +35,20 @@ public class UserController {
     public String registerUserAccount(
             @ModelAttribute("user") @Valid UserRegistrationDto accountDto, BindingResult result) {
 
-        User registered = new User();
-        registered = createUserAccount(accountDto, result);
+        Optional<User> registered = createUserAccount(accountDto, result);
+        if (registered.isEmpty()) {
+            return "badRegistration";
+        }
         return "login";
     }
 
-    private User createUserAccount(UserRegistrationDto accountDto, BindingResult result) {
-        User registered = null;
+    private Optional<User> createUserAccount(UserRegistrationDto accountDto, BindingResult result) {
+        User registered;
         try {
             registered = userService.registerNewUserAccount(accountDto);
         } catch (Exception e) {
-            return null;
+            return Optional.empty();
         }
-        return registered;
+        return Optional.of(registered);
     }
 }

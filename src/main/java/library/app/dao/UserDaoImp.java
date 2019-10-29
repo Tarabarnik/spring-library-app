@@ -21,7 +21,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public User add(User user) {
         sessionFactory.getCurrentSession().save(user);
-        return findByUsername(user.getUsername()).orElse(null);
+        return user;
     }
 
     @Override

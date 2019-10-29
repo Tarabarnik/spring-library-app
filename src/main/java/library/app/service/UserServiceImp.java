@@ -48,21 +48,23 @@ public class UserServiceImp implements UserService {
             throw new Exception(
                     "There is an account with that email address: " + accountDto.getEmail());
         }
-        User user = new User();
-        user.setFirstName(accountDto.getFirstName());
-        user.setLastName(accountDto.getLastName());
-        user.setPassword(accountDto.getPassword());
-        user.setEmail(accountDto.getEmail());
-        user.setUsername(accountDto.getUsername());
+        User user = dtoMapper(accountDto);
         user.setRoles(Arrays.asList(new Role("USER")));
         return userDao.add(user);
     }
 
     private boolean emailExists(String email) {
         User user = userDao.findByEmail(email).orElse(null);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return user != null;
+    }
+
+    private User dtoMapper(UserRegistrationDto accountDto) {
+        User user = new User();
+        user.setFirstName(accountDto.getFirstName());
+        user.setLastName(accountDto.getLastName());
+        user.setPassword(accountDto.getPassword());
+        user.setEmail(accountDto.getEmail());
+        user.setUsername(accountDto.getUsername());
+        return user;
     }
 }
