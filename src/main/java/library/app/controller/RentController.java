@@ -1,5 +1,9 @@
 package library.app.controller;
 
+import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
+
 import library.app.entity.Book;
 import library.app.entity.User;
 import library.app.service.BookService;
@@ -12,14 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/rent")
 public class RentController {
 
-    private static final Long USER_ID = 1L;
     @Autowired
     private UserService userService;
     @Autowired
@@ -28,24 +28,25 @@ public class RentController {
     private BookService bookService;
 
     @GetMapping("/getbook")
-    public String rentBook(ModelMap model, @RequestParam(name = "book_id") Long bookId) {
-        User user = userService.get(USER_ID).get();
+    public String rentBook(ModelMap model, @RequestParam(name = "book_id") Long bookId,
+                           Principal principal) {
+        User user = userService.getByEmail(principal.getName()).get();
         Book book = bookService.get(bookId).get();
         libraryService.rentBook(user, book);
-        return userRents(model);
+        return userRents(model, principal);
     }
 
-    @GetMapping("/userRents")
-    public String userRents(ModelMap model) {
-        User user = userService.get(USER_ID).get();
+    @GetMapping("/userrents")
+    public String userRents(ModelMap model, Principal principal) {
+        User user = userService.getByEmail(principal.getName()).get();
         List<Book> books = libraryService.getBooksRentByUser(user);
         model.put("books", books);
         return "userRents";
     }
 
     @GetMapping("/returnbook")
-    public String returnBook(@RequestParam(name = "book_id") Long bookId) {
-        Optional<User> user = userService.get(USER_ID);
+    public String returnBook(@RequestParam(name = "book_id") Long bookId, Principal principal) {
+        Optional<User> user = userService.getByEmail(principal.getName());
         Optional<Book> book = bookService.get(bookId);
         libraryService.returnBook(user.get(), book.get());
         return "allBooks";

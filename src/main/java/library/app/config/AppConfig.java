@@ -20,7 +20,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScans(value = {
         @ComponentScan("library.app.dao"),
-        @ComponentScan("library.app.service")
+        @ComponentScan("library.app.service"),
+        @ComponentScan("library.app.security")
 })
 public class AppConfig {
 
