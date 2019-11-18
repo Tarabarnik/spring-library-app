@@ -9,6 +9,7 @@ Technologies used:
 -Hibernate
 -Tomcat
 -Maven
+-MySQL
 
 Realisation includes:
 -Registration process
